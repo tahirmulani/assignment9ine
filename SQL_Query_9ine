@@ -1,0 +1,139 @@
+USE [StudentMasterDB]
+GO
+
+/****** Object:  Table [dbo].[StudentMaster]    Script Date: 2/24/2021 3:29:13 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[StudentMaster](
+	[StudentId] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [nvarchar](50) NOT NULL,
+	[Password] [nvarchar](50) NOT NULL,
+	[FirstName] [nvarchar](100) NOT NULL,
+	[LastName] [nvarchar](50) NOT NULL,
+	[Email] [nvarchar](100) NOT NULL,
+	[Mobile] [nvarchar](50) NULL,
+	[Standard] [nvarchar](50) NULL,
+	[Division] [nchar](10) NULL,
+ CONSTRAINT [PK_StudentMaster] PRIMARY KEY CLUSTERED 
+(
+	[StudentId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+USE [StudentMasterDB]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_UpdateStudent]    Script Date: 2/24/2021 3:29:50 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE procedure [dbo].[sp_UpdateStudent]
+@studentid int,
+@username nvarchar(50),
+@firstname nvarchar(100),
+@lastname nvarchar(50),
+@email nvarchar(100),
+@mobile nvarchar(50),
+@standard nvarchar(50),
+@division nchar(10)
+as
+update [dbo].[StudentMaster]
+           set [UserName]=@username
+           ,[FirstName]=@firstname
+           ,[LastName]=@lastname
+           ,[Email]=@email
+           ,[Mobile]=@mobile
+           ,[Standard]=@standard
+           ,[Division]=@division
+where StudentId=@studentid
+
+GO
+
+
+USE [StudentMasterDB]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_InsertStudent]    Script Date: 2/24/2021 3:30:12 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+create procedure [dbo].[sp_InsertStudent]
+@username nvarchar(50),
+@password nvarchar(50),
+@firstname nvarchar(100),
+@lastname nvarchar(50),
+@email nvarchar(100),
+@mobile nvarchar(50),
+@standard nvarchar(50),
+@division nchar(10)
+as
+INSERT INTO [dbo].[StudentMaster]
+           ([UserName]
+           ,[Password]
+           ,[FirstName]
+           ,[LastName]
+           ,[Email]
+           ,[Mobile]
+           ,[Standard]
+           ,[Division])
+     VALUES
+           (@username,
+@password,
+@firstname,
+@lastname,
+@email,
+@mobile,
+@standard,
+@division)
+
+GO
+
+
+USE [StudentMasterDB]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_GetStudentList]    Script Date: 2/24/2021 3:30:30 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+create procedure [dbo].[sp_GetStudentList]
+as
+select * from StudentMaster
+GO
+
+
+USE [StudentMasterDB]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_DeleteStudent]    Script Date: 2/24/2021 3:30:45 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+create procedure [dbo].[sp_DeleteStudent]
+@studentid int
+
+as
+delete from [dbo].[StudentMaster] where StudentId=@studentid
+ 
+
+GO
+
+
